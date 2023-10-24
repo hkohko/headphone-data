@@ -1,0 +1,16 @@
+[project]
+name = "headphone-sound-profile"
+version = "0.0.1"
+description = "Scrape Headphone Sound Profile Images"
+authors = [
+    {name = "'", email = "91366057+hkohko@users.noreply.github.com"},
+]
+dependencies = [
+    "pre-commit>=3.5.0",
+    "httpx>=0.25.0",
+    "Pillow>=10.1.0",
+    "python-dotenv>=1.0.0",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
