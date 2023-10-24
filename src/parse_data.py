@@ -1,5 +1,7 @@
 import json
+
 from constants import JSON_FILES
+
 
 def parse_json() -> None:
     with open(JSON_FILES.joinpath("sample_response.json")) as sample_file:
