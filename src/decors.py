@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 from constants import JSON_FILES
@@ -29,3 +30,18 @@ def insert_to_headphone_db(func: Callable):
         insert_into_headphones(result)
 
     return wrapper
+
+
+def create_json_file_dirs(path: Path):
+    def decorator(func):
+        def wrapper(*args):
+            if not Path(path).exists():
+                Path(path).mkdir()
+            try:
+                func(args)
+            except TypeError:
+                func()
+
+        return wrapper
+
+    return decorator
