@@ -11,5 +11,9 @@ DB = SRC.joinpath("data", "db", "headphones.db")
 SAMPLE_IMAGE = dotenv_values(ENV).get("SAMPLE_IMAGE")
 SAMPLE_URL = dotenv_values(ENV).get("SAMPLE_URL")
 LINKS_URL = dotenv_values(ENV).get("LINKS_URL")
+
 PRODUCT_IDENT_NAME = "product_identity.json"
+SAMPLE_RESPONSE_NAME = "sample_response.json"
+
+SAMPLE_RESPONSE_PATH = JSON_FILES.joinpath(SAMPLE_RESPONSE_NAME)
 PRODUCT_IDENT_PATH = JSON_FILES.joinpath(PRODUCT_IDENT_NAME)
