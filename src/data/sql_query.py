@@ -1,9 +1,11 @@
 import sqlite3
 from typing import Any
 
-from constants import DB
+import decors
+from constants import DB, DB_DIR
 
 
+@decors.create_dir(DB_DIR)
 def connect() -> sqlite3.Connection:
     return sqlite3.connect(DB)
 

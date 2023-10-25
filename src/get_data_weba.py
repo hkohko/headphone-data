@@ -2,8 +2,8 @@ import json
 
 import httpx
 
+import decors
 from constants import JSON_FILES, LINKS_URL
-from decors import create_json_file_dirs
 
 h_file = JSON_FILES.joinpath("headers.json")
 p_file = JSON_FILES.joinpath("payload.json")
@@ -17,13 +17,13 @@ def postman_paste() -> None:
     pass
 
 
-@create_json_file_dirs(JSON_FILES)
+@decors.create_dir(JSON_FILES)
 def write_header(obj: tuple[dict]) -> None:
     with open(h_file, "w") as headerfile:
         json.dump(*obj, headerfile)
 
 
-@create_json_file_dirs(JSON_FILES)
+@decors.create_dir(JSON_FILES)
 def write_payload(obj: tuple[dict]) -> None:
     with open(p_file, "w") as payloadfile:
         json.dump(*obj, payloadfile)
@@ -41,4 +41,4 @@ def create_samplefile() -> None:
 
 if __name__ == "__main__":
     postman_paste()
-    create_json_file_dirs()
+    create_samplefile()

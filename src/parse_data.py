@@ -4,7 +4,8 @@ from pathlib import Path
 from typing import Any
 
 from constants import PRODUCT_IDENT_NAME, PRODUCT_IDENT_PATH, SAMPLE_RESPONSE_PATH
-from decors import insert_to_headphone_db, write_result
+from decors import write_result
+from src.data.sql_query import insert_into_headphones
 
 
 @write_result(PRODUCT_IDENT_NAME)
@@ -23,13 +24,16 @@ def parse_json(sample_response: tuple[Path]) -> str:
     return json.dumps(result)
 
 
-@insert_to_headphone_db
-def open_product_ident(product_identity: tuple[Path]) -> list[dict[str, Any]]:
-    with open(product_identity[0]) as file:
+def open_product_ident(product_identity: Path) -> list[dict[str, Any]]:
+    with open(product_identity) as file:
         jsonfile = json.load(file)
     return jsonfile
 
 
+def save_to_db(data: list[dict[str, Any]]):
+    insert_into_headphones(data)
+
+
 if __name__ == "__main__":
     parse_json(SAMPLE_RESPONSE_PATH)
-    open_product_ident(PRODUCT_IDENT_PATH)
+    save_to_db(open_product_ident(PRODUCT_IDENT_PATH))
