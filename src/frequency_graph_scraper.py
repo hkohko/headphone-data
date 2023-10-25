@@ -19,7 +19,7 @@ def open_page() -> str:
     return html
 
 
-async def get_image_size(url: str, image_size: str) -> str:
+async def change_img_size(url: str, image_size: str) -> str:
     sizes = ("tiny", "small", "medium", "large")
     newline = "\n"
     if image_size not in sizes:
@@ -39,10 +39,10 @@ async def frequency_response_img(url: str, img_size: str) -> str:
     div5 = div4.find("div", {"data-id": "7902"})
     a = div5.find("a", {"class": "simple_image-link"})
     img_url = a.find("img").get("src")
-    get_size = await get_image_size(img_url, img_size)
-    return get_size
+    resized_img = await change_img_size(img_url, img_size)
+    return resized_img
 
 
 if __name__ == "__main__":
     with asyncio.Runner() as runner:
-        runner.run(frequency_response_img(SAMPLE_URL, "medium"))
+        print(runner.run(frequency_response_img(SAMPLE_URL, "medium")))
