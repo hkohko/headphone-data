@@ -1,12 +1,9 @@
 import json
-from pathlib import Path
 
 import httpx
 
-from constants import JSON_FILES, LINKS_URL  # type: ignore
-
-if not Path(JSON_FILES).exists():
-    Path(JSON_FILES).mkdir()
+from constants import JSON_FILES, LINKS_URL
+from decors import create_json_file_dirs
 
 h_file = JSON_FILES.joinpath("headers.json")
 p_file = JSON_FILES.joinpath("payload.json")
@@ -14,19 +11,22 @@ sample_response = JSON_FILES.joinpath("sample_response.json")
 
 
 def postman_paste() -> None:
+    # paste data from postman first
     # write_header(headers)
     # write_payload(payload)
     pass
 
 
-def write_header(obj: dict) -> None:
+@create_json_file_dirs(JSON_FILES)
+def write_header(obj: tuple[dict]) -> None:
     with open(h_file, "w") as headerfile:
-        json.dump(obj, headerfile)
+        json.dump(*obj, headerfile)
 
 
-def write_payload(obj: dict) -> None:
+@create_json_file_dirs(JSON_FILES)
+def write_payload(obj: tuple[dict]) -> None:
     with open(p_file, "w") as payloadfile:
-        json.dump(obj, payloadfile)
+        json.dump(*obj, payloadfile)
 
 
 def create_samplefile() -> None:
@@ -40,4 +40,5 @@ def create_samplefile() -> None:
 
 
 if __name__ == "__main__":
-    pass
+    postman_paste()
+    create_json_file_dirs()
