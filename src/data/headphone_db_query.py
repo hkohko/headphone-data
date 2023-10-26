@@ -1,16 +1,9 @@
-import sqlite3
 from typing import Any
 
-import decors
-from constants import DB, DB_DIR
+from .db_main import connect
 
 
-@decors.create_dir(DB_DIR)
-def connect() -> sqlite3.Connection:
-    return sqlite3.connect(DB)
-
-
-def create_table():
+def create_headphone_table():
     Q_CREATE_TABLE = """CREATE TABLE IF NOT EXISTS headphone(
     id INTEGER PRIMARY KEY,
     name TEXT UNIQUE,
@@ -35,3 +28,13 @@ def insert_into_headphones(data: list[dict[str, Any]]):
     with connect() as conn:
         cursor = conn.cursor()
         cursor.executemany(Q_INSERT_HEADPHONES, data)
+        conn.commit()
+
+
+def query_all_data():
+    Q_QUERY_TABLE = "SELECT * FROM headphone"
+    with connect() as conn:
+        cur = conn.cursor()
+        cur.execute(Q_QUERY_TABLE)
+        for id, name, url in cur:
+            yield id, name, url
