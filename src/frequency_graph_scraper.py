@@ -44,6 +44,7 @@ async def change_img_size(url: str, image_size: str) -> str:
 
 async def frequency_response_img(url: str, img_size: str) -> str | None:
     try:
+        the_parent = None
         page = await make_request(url)
         soup = BeautifulSoup(page, "lxml")
         div = soup.find("div", {"class": "product_page", "data-part": "ProductPage"})
@@ -52,8 +53,12 @@ async def frequency_response_img(url: str, img_size: str) -> str | None:
         )
         div3 = div2.find("div", {"class": "product_page-test_results-content"})
         div4 = div3.find("div", {"class": "e-simple_grid is-aligned"})
-        div5 = div4.find("div", {"data-id": "7902"})
-        a = div5.find("a", {"class": "simple_image-link"})
+        find_a = div4.find_all("a")
+        for a in find_a:
+            if a.get("id") == "test_3411":
+                the_parent = a.parent
+                break
+        a = the_parent.find("a", {"class": "simple_image-link"})
         img_url = a.find("img").get("src")
         resized_img = await change_img_size(img_url, img_size)
         return resized_img
@@ -68,6 +73,7 @@ async def task(link, db_id, img_size):
     if img_link is None:
         return None
     data = {"id": db_id, "img_url": img_link}
+    print(data)
     await insert_into_db(data)
 
 
