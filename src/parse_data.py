@@ -5,7 +5,7 @@ from typing import Any
 
 from constants import PRODUCT_IDENT_NAME, PRODUCT_IDENT_PATH, SAMPLE_RESPONSE_PATH
 from decors import write_result
-from src.data.sql_query import insert_into_headphones
+from src.data.headphone_db_query import insert_into_headphones
 
 
 @write_result(PRODUCT_IDENT_NAME)

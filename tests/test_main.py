@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 from constants import JSON_FILES
-from src.data.sql_query import connect
+from src.data.headphone_db_query import connect
 
 
 def open_file():
